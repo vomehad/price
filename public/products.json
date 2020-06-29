@@ -5,7 +5,7 @@
       "title": "Жрачка для котов",
       "description": "Котячая <em>жратва</em>, коты крутые",
       "price": 2000,
-      "image": "../src/assets/images/food-cat.jpg",
+      "image": "./images/food-cat.jpg",
       "availableInventory": 10,
       "rating": 3
     },
@@ -14,7 +14,7 @@
       "title": "Yarn",
       "description": "Yarn your cat play with for a very <strong>long</strong> time",
       "price": 299,
-      "image": "../src/assets/images/yarn.jpg",
+      "image": "./images/yarn.jpg",
       "availableInventory": 7,
       "rating": 1
     },
@@ -23,7 +23,7 @@
       "title": "Kitty Litter",
       "description": "Premium kitty litter for your cat",
       "price": 1100,
-      "image": "../src/assets/images/kitty-litter.jpg",
+      "image": "./images/kitty-litter.jpg",
       "availableInventory": 99,
       "rating": 4
     },
@@ -32,7 +32,7 @@
       "title": "Cat House",
       "description": "A place for your cat to sleep",
       "price": 799,
-      "image": "../src/assets/images/house-cat.jpg",
+      "image": "./images/house-cat.jpg",
       "availableInventory": 11,
       "rating": 5
     },
@@ -41,7 +41,7 @@
       "title": "Laser Pointer",
       "description": "Drive your cat crazy with this amazing product",
       "price": 4999,
-      "image": "../src/assets/images/laser-pointer.jpg",
+      "image": "./images/laser-pointer.jpg",
       "availableInventory": 25,
       "rating": 1
     }

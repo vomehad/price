@@ -15,118 +15,128 @@
             </div>
         </header>
         <main>
-            <div class="row" v-if="showProduct">
-                <div class="col-md-2 col-md-offset-1">
-                    <figure><img alt="Kitty Food"></figure>
-                </div>
-                <div class="col-md-6 col-md-offset-2 description">
-                    <h1 v-text="product.title"></h1>
-                    <p v-html="product.description"></p>
-                    <p class="price">{{ product.price | formatPrice }}</p>
-                    <button class="btn btn-primary btn-lg"
-                            @click="addToCart"
-                            v-if="canAddToCArt"
-                    >Add to cart</button>
-                    <button class="btn btn-primary btn-lg"
-                            disabled="true"
-                            v-else
-                    >Add To Card</button>
-                    <span class="inventory-message"
-                          v-if="product.availableInventory - cartItemCount === 0"
-                    >
+            <div v-if="showProduct">
+                <div class=""
+                     v-for="product in products"
+                     :key="product.id"
+                >
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-0">
+                            <figure><img class="product" :src="product.image" alt="Kitty Food"></figure>
+                        </div>
+                        <div class="col-md-6 col-md-offset-0 description">
+                            <h1 v-text="product.title"></h1>
+                            <p v-html="product.description"></p>
+                            <p class="price">{{ product.price | formatPrice }}</p>
+                            <button class="btn btn-primary btn-lg"
+                                    @click="addToCart(product)"
+                                    v-if="canAddToCArt(product)"
+                            >Add to cart</button>
+                            <button class="btn btn-primary btn-lg"
+                                    disabled="true"
+                                    v-else
+                            >Add To Card</button>
+                            <span class="inventory-message"
+                                  v-if="product.availableInventory - cartItemCount === 0"
+                            >
                         All Out
                     </span>
-                    <span class="inventory-message"
-                          v-else-if="product.availableInventory - cartItemCount < 5"
-                    >
+                            <span class="inventory-message"
+                                  v-else-if="product.availableInventory - cartItemCount < 5"
+                            >
                         Only {{ product.availableInventory - cartItemCount }} left
                     </span>
-                    <span class="inventory-message"
-                          v-else
-                    >
+                            <span class="inventory-message"
+                                  v-else
+                            >
                         Buy Now
                     </span>
-                    <div class="rating">
-                        <span :class="{'rating-active': checkRating(n)}"
+                            <div class="rating">
+                        <span :class="{'rating-active': checkRating(n, product)}"
                               v-for="n in 5"
                               :key="n"
                         >*</span>
+                            </div>
+                        </div>
                     </div>
+                    <hr>
                 </div>
             </div>
 
-            <div class="row" v-else>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <strong>First Name:</strong>
-                        <input v-model.trim="order.firstName" class="form-control" />
+            <div v-else>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <strong>First Name:</strong>
+                            <input v-model.trim="order.firstName" class="form-control" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <strong>LastName:</strong>
-                        <input v-model.trim="order.lastName" class="form-control">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <strong>LastName:</strong>
+                            <input v-model.trim="order.lastName" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <strong>Adress:</strong>
-                        <input v-model.lazy="order.address" class="form-control">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <strong>Adress:</strong>
+                            <input v-model.lazy="order.address" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <strong>City:</strong>
-                        <input v-model.trim="order.city" class="form-control">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <strong>City:</strong>
+                            <input v-model.trim="order.city" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <strong>State:</strong>
-                        <select v-model="order.state" class="form-control">
-                            <option disabled value="">State</option>
-                            <option v-for="(state, key) in states" :value="state" :key="key">{{ key }}</option>
-                        </select>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <strong>State:</strong>
+                            <select v-model="order.state" class="form-control">
+                                <option disabled value="">State</option>
+                                <option v-for="(state, key) in states" :value="state" :key="key">{{ key }}</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12 boxes">
-                    <input type="checkbox"
-                           id="gift"
-                           value="true"
-                           :true-value="order.sendGift"
-                           :false-value="order.dontSendGift"
-                           v-model="order.gift"
-                    ><label for="gift">Ship As A Gift?</label>
-                </div>
-                <div class="form-group">
                     <div class="col-md-12 boxes">
-                        <input type="radio"
-                               id="home"
-                               :value="order.home"
-                               v-model="order.method"
-                        ><label for="home">Home</label>
-                        <input type="radio"
-                               id="business"
-                               :value="order.business"
-                               v-model="order.method"
-                        ><label for="business">Business</label>
+                        <input type="checkbox"
+                               id="gift"
+                               value="true"
+                               :true-value="order.sendGift"
+                               :false-value="order.dontSendGift"
+                               v-model="order.gift"
+                        ><label for="gift">Ship As A Gift?</label>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary submit" @click="submitForm">Заказать</button>
+                    <div class="form-group">
+                        <div class="col-md-12 boxes">
+                            <input type="radio"
+                                   id="home"
+                                   :value="order.home"
+                                   v-model="order.method"
+                            ><label for="home">Home</label>
+                            <input type="radio"
+                                   id="business"
+                                   :value="order.business"
+                                   v-model="order.method"
+                            ><label for="business">Business</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12 verify">
-                    <pre>
-                        FirstName:  {{ order.firstName }}
-                        LastName:   {{ order.lastName }}
-                        Adress:     {{ order.address }}
-                        City:       {{ order.city }}
-                        State:      {{ order.state }}
-                        Method:     {{ order.method }}
-                        Gift:       {{ order.gift }}
-                    </pre>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary submit" @click="submitForm">Заказать</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 verify">
+                        <pre>
+                            FirstName:  {{ order.firstName }}
+                            LastName:   {{ order.lastName }}
+                            Adress:     {{ order.address }}
+                            City:       {{ order.city }}
+                            State:      {{ order.state }}
+                            Method:     {{ order.method }}
+                            Gift:       {{ order.gift }}
+                        </pre>
+                    </div>
                 </div>
             </div>
         </main>
@@ -143,15 +153,7 @@
         data() {
             return {
                 siteName: 'Vue.js Pet Deport',
-                product: {
-                    id: 1001,
-                    title: "Жрачка для котов",
-                    description: "Котячая <em>жратва</em>, коты крутые",
-                    price: 20000000,
-                    image: "../src/assets/images/food-cat.jpg",
-                    availableInventory: 10,
-                    rating: 3,
-                },
+                products: [],
                 cart: [],
                 showProduct: true,
                 order: {
@@ -178,9 +180,7 @@
             cartItemCount() {
                 return this.cart.length || '';
             },
-            canAddToCArt() {
-                return this.product.availableInventory > this.cartItemCount;
-            },
+
         },
         filters: {
             formatPrice(price) {
@@ -207,14 +207,27 @@
             showCheckout() {
                 this.showProduct = !this.showProduct;
             },
-            addToCart() {
-                this.cart.push(this.product.id);
+            addToCart(aProduct) {
+                this.cart.push(aProduct.id);
             },
             submitForm() {
                 alert('Submitted');
             },
-            checkRating(n) {
-                return this.product.rating - n >= 0;
+            checkRating(n, myProduct) {
+                return myProduct.rating - n >= 0;
+            },
+            canAddToCArt(aProduct) {
+                return aProduct.availableInventory > this.cartCount(aProduct.id);
+            },
+            cartCount(id) {
+                let count = 0;
+                for (let i = 0; i < this.cart.length; i++) {
+                    if (this.cart[i] === id) {
+                        count++;
+                    }
+                }
+
+                return count;
             },
         },
         beforeCreate: () => {
