@@ -17,7 +17,7 @@
         <main>
             <div v-if="showProduct">
                 <div class=""
-                     v-for="product in products"
+                     v-for="product in sortedProducts"
                      :key="product.id"
                 >
                     <div class="row">
@@ -37,25 +37,25 @@
                                     v-else
                             >Add To Card</button>
                             <span class="inventory-message"
-                                  v-if="product.availableInventory - cartItemCount === 0"
+                                  v-if="product.availableInventory - cartCount(product.id) === 0"
                             >
-                        All Out
-                    </span>
+                                All Out
+                            </span>
                             <span class="inventory-message"
-                                  v-else-if="product.availableInventory - cartItemCount < 5"
+                                  v-else-if="product.availableInventory - cartCount(product.id) < 5"
                             >
-                        Only {{ product.availableInventory - cartItemCount }} left
-                    </span>
+                                Only {{ product.availableInventory - cartCount(product.id) }} left
+                            </span>
                             <span class="inventory-message"
                                   v-else
                             >
-                        Buy Now
-                    </span>
+                                Buy Now
+                            </span>
                             <div class="rating">
-                        <span :class="{'rating-active': checkRating(n, product)}"
-                              v-for="n in 5"
-                              :key="n"
-                        >*</span>
+                                <span :class="{'rating-active': checkRating(n, product)}"
+                                      v-for="n in 5"
+                                      :key="n"
+                                ></span>
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,15 @@
             cartItemCount() {
                 return this.cart.length || '';
             },
+            sortedProducts() {
+                if (this.products.length > 0) {
+                    let productArray = this.products.slice(0);
 
+                    return productArray.sort(this.compare);
+                }
+
+                return [];
+            },
         },
         filters: {
             formatPrice(price) {
@@ -229,6 +237,16 @@
 
                 return count;
             },
+            compare(a, b) {
+                if (a.title.toLowerCase() < b.title.toLowerCase()) {
+                    return -1;
+                }
+                if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                    return 1;
+                }
+
+                return 0;
+            }
         },
         beforeCreate: () => {
             if (APP_LIFECYCLE_EVENTS) {
