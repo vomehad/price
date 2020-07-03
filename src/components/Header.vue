@@ -9,15 +9,16 @@
                 </h1>
             </div>
             <div class="nav navbar-nav navbar-right cart">
-                <button class="btn btn-default btn-lg"
-                        type="button"
-                        @click="showCheckout"
+                <router-link active-class="active"
+                             tag="button"
+                             class="btn btn-default btn-lg"
+                             :to="{name: 'Form'}"
                 >
                     <span class="glyphicon glypicon-shopping-cart">
                         {{ cartItemCount }}
                     </span>
                     Checkout
-                </button>
+                </router-link>
             </div>
         </div>
     </header>
@@ -32,11 +33,6 @@
             }
         },
         props: ['cartItemCount'],
-        methods: {
-            showCheckout() {
-                this.$router.push({name: 'Form'});
-            }
-        }
     }
 </script>
 
@@ -44,5 +40,9 @@
     a {
         text-decoration: none;
         color: black;
+    }
+
+    .router-link-exact-active {
+        color: blue;
     }
 </style>

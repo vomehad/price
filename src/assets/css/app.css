@@ -12,10 +12,23 @@ body {
 
 .boxes {
     margin-top: 20px;
+    margin-left: 5px;
+}
+
+.boxes label {
+    margin-left: inherit;
+}
+
+.boxes input {
+    margin-left: inherit;
 }
 
 .verify {
-    margin-top: 20px;
+    margin-top: 80px;
+}
+
+.verify pre {
+    display: inline-block;
 }
 
 .submit {
