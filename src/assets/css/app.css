@@ -3,7 +3,7 @@ header h1 {
 }
 
 body {
-    max-width: 970px;
+    max-width: 970px !important;
 }
 
 .cart {

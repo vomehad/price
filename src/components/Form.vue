@@ -18,7 +18,7 @@
                             </div><!-- end of col-md-6 -->
                             <div class="col-md-6">
                                 <strong>Last Name:</strong>
-                                <input class="form-control" v-model="order.lastName" />
+                                <input class="form-control" v-model.trim="order.lastName" />
                             </div><!-- end of col-md-6 -->
                         </div><!-- end of form-group -->
                         <div class="form-group">
@@ -26,7 +26,7 @@
                                 <strong>Address:</strong>
                             </div><!-- end of col-md-12 -->
                             <div class="col-md-12">
-                                <input class="form-control" v-model="order.address" />
+                                <input class="form-control" v-model.trim="order.address" />
                             </div><!-- end of col-md-12 -->
                         </div><!-- end of form-group -->
                         <div class="form-group">
@@ -34,7 +34,7 @@
                                 <strong>City:</strong>
                             </div><!-- end of col-md-12 -->
                             <div class="col-md-12">
-                                <input class="form-control" v-model="order.city" />
+                                <input class="form-control" v-model.trim="order.city" />
                             </div><!-- end of col-md-12 -->
                         </div><!-- end of form-group -->
                         <div class="form-group">
@@ -67,7 +67,7 @@
                             <div class="col-md-6 boxes">
                                 <input type="radio"
                                        id="home"
-                                       :value="order.business"
+                                       :value="order.home"
                                        v-model="order.method"
                                 >
                                 <label for="home">Home</label>
@@ -82,6 +82,7 @@
                         <div class="form-group">
                             <div class="col-md-6">
                                 <button class="btn btn-primary submit"
+                                        type="submit"
                                         @click="submitForm"
                                 >Place Order</button>
                             </div><!-- end of col-md-6 -->
